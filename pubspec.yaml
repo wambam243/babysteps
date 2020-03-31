@@ -49,7 +49,7 @@ flutter:
   assets:
     - locale/i18n_en.json
     - locale/i18n_fr.json
-    - locale/i18n.nl.json
+    - locale/i18n_nl.json
 
   # To add assets to your application, add an assets section, like this:
   # assets:

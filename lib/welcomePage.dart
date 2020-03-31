@@ -1,7 +1,12 @@
+import 'package:baby_steps/main.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'loginPage.dart';
 import 'signup.dart';
+import 'translations.dart';
+import 'application.dart';
+
+
 
 class WelcomePage extends StatefulWidget {
   WelcomePage({Key key, this.title}) : super(key: key);
@@ -13,6 +18,28 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
+
+  SpecificLocalizationDelegate _localeOverrideDelegate;
+
+  @override
+  void initState(){
+    super.initState();
+    _localeOverrideDelegate = new SpecificLocalizationDelegate(null);
+    ///
+    /// Let's save a pointer to this method, should the user wants to change its language
+    /// We would then call: applic.onLocaleChanged(new Locale('en',''));
+    ///
+    applic.onLocaleChanged = onLocaleChange;
+  }
+
+  onLocaleChange(Locale locale){
+    setState((){
+      _localeOverrideDelegate = new SpecificLocalizationDelegate(locale);
+    });
+  }
+
+
+
   Widget _submitButton() {
     return InkWell(
       onTap: () {
@@ -34,7 +61,7 @@ class _WelcomePageState extends State<WelcomePage> {
             ],
             color: Colors.white),
         child: Text(
-          'Connectez-vous',
+          Translations.of(context).text('msg_connect'),
           style: TextStyle(fontSize: 20, color: Colors.cyan),
         ),
       ),
@@ -117,6 +144,7 @@ class _WelcomePageState extends State<WelcomePage> {
 
   @override
   Widget build(BuildContext context) {
+    applic.onLocaleChanged(new Locale('fr',''));
     return Scaffold(
       body:SingleChildScrollView(
         child:Container(
