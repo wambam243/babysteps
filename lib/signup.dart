@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'Widget/bezierContainer.dart';
+import 'Widget/custom_text.dart';
 import 'loginPage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class SignUpPage extends StatefulWidget {
   SignUpPage({Key key, this.title}) : super(key: key);
@@ -13,6 +16,17 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  DateTime selectedEndDate = DateTime.now();
+  CustomText _birthdateContainer;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _birthdateContainer = CustomText(DateFormat("dd-MM-yyyy").format(selectedEndDate), color: Colors.black);
+
+  }
+
   Widget _backButton() {
     return InkWell(
       onTap: () {
@@ -36,7 +50,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Widget _entryField(String title, {bool isPassword = false}) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: EdgeInsets.symmetric(vertical: 3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -45,14 +59,54 @@ class _SignUpPageState extends State<SignUpPage> {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
           SizedBox(
-            height: 10,
+            height: 2,
           ),
           TextField(
               obscureText: isPassword,
               decoration: InputDecoration(
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: Colors.black, width: 0.0),
+                  ),
                   border: InputBorder.none,
                   fillColor: Color(0xfff3f3f4),
-                  filled: true))
+                  filled: true)),
+        ],
+      ),
+    );
+  }
+
+  Widget _birthDate(String title) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 3),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            title,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(
+            height: 2,
+          ),
+          FlatButton(
+            onPressed: () {
+              DatePicker.showDatePicker(context,
+                  showTitleActions: true,
+                  minTime: DateTime(1980, 3, 5),
+                  maxTime: DateTime(2019, 6, 7),
+                  onChanged: (date) {}, onConfirm: (date) {
+                setState(() {
+                  selectedEndDate = date;
+                  _birthdateContainer = CustomText(
+                      DateFormat("dd-MM-yyyy").format(selectedEndDate),
+                      color: Colors.black);
+                });
+              }, currentTime: DateTime.now(), locale: LocaleType.fr);
+            },
+            child: _birthdateContainer,
+          )
         ],
       ),
     );
@@ -143,8 +197,9 @@ class _SignUpPageState extends State<SignUpPage> {
     return Column(
       children: <Widget>[
         _entryField("Username"),
-        _entryField("Email id"),
+        _entryField("Email"),
         _entryField("Password", isPassword: true),
+        _birthDate("Birth Date"),
       ],
     );
   }
@@ -153,49 +208,47 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
-            child:Container(
-              height: MediaQuery.of(context).size.height,
-              child:Stack(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Expanded(
-                          flex: 3,
-                          child: SizedBox(),
-                        ),
-                        _title(),
-                        SizedBox(
-                          height: 50,
-                        ),
-                        _emailPasswordWidget(),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        _submitButton(),
-                        Expanded(
-                          flex: 2,
-                          child: SizedBox(),
-                        )
-                      ],
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: _loginAccountLabel(),
-                  ),
-                  Positioned(top: 40, left: 0, child: _backButton()),
-                  Positioned(
-                      top: -MediaQuery.of(context).size.height * .15,
-                      right: -MediaQuery.of(context).size.width * .4,
-                      child: BezierContainer())
-                ],
-              ),
-            )
-        )
-    );
+            child: Container(
+      height: MediaQuery.of(context).size.height,
+      child: Stack(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  flex: 3,
+                  child: SizedBox(),
+                ),
+                _title(),
+                SizedBox(
+                  height: 50,
+                ),
+                _emailPasswordWidget(),
+                SizedBox(
+                  height: 20,
+                ),
+                _submitButton(),
+                Expanded(
+                  flex: 2,
+                  child: SizedBox(),
+                )
+              ],
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: _loginAccountLabel(),
+          ),
+          Positioned(top: 40, left: 0, child: _backButton()),
+          Positioned(
+              top: -MediaQuery.of(context).size.height * .15,
+              right: -MediaQuery.of(context).size.width * .4,
+              child: BezierContainer())
+        ],
+      ),
+    )));
   }
 }

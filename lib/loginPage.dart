@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
               padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
               child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
             ),
-            Text('Retour vers Accueil',
+            Text('Back',
                 style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
           ],
         ),
@@ -79,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
               end: Alignment.centerRight,
               colors: [Colors.cyan, Colors.white])),
       child: Text(
-        'Connexion',
+        'Connection',
         style: TextStyle(fontSize: 20, color: Colors.white),
       ),
     );
@@ -174,7 +174,7 @@ class _LoginPageState extends State<LoginPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            'Pas encore inscrit ?',
+            'Not member yet ?',
             style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
           ),
           SizedBox(
@@ -186,7 +186,7 @@ class _LoginPageState extends State<LoginPage> {
                   MaterialPageRoute(builder: (context) => SignUpPage()));
             },
             child: Text(
-              'Inscrivez-vous',
+              'Subscribe',
               style: TextStyle(
                   color: Colors.cyan,
                   fontSize: 13,
@@ -225,8 +225,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget _emailPasswordWidget() {
     return Column(
       children: <Widget>[
-        _entryField("Adresse Mail"),
-        _entryField("Mot de Passe", isPassword: true),
+        _entryField("Email"),
+        _entryField("Password", isPassword: true),
       ],
     );
   }
@@ -261,7 +261,7 @@ class _LoginPageState extends State<LoginPage> {
                         Container(
                           padding: EdgeInsets.symmetric(vertical: 10),
                           alignment: Alignment.centerRight,
-                          child: Text('Mot de Passe oublié ?',
+                          child: Text('Password Forgotten ?',
                               style:
                               TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
                         ),
